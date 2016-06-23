@@ -62,10 +62,36 @@ class Bradesco extends BoletoAbstract
     protected $especieDoc = 'DM';
 
     /**
+     * Linha de local de pagamento
+     * @var string
+     */
+    protected $localPagamento = 'Pagável preferencialmente na Rede Bradesco ou Bradesco Expresso';
+
+    /**
      * Define as carteiras disponíveis para este banco
      * @var array
      */
     protected $carteiras = array('3', '6', '9');
+
+    /**
+     * Digito de Auto Conferencia do Número Bancário.
+     * 1 posicao
+     * @var int
+    */
+    protected $digitoAutoConferencia;
+
+    /**
+     * Nome do arquivo de template a ser usado
+     *
+     * A Caixa obriga-nos a usar campos não presentes no projeto original, além de alterar cedente
+     * para beneficiário e sacado para pagador. Segundo o banco, estas regras muitas vezes não são
+     * observadas na homologação, mas, considerando o caráter subjetivo de quem vai analisar na Caixa,
+     * preferi incluir todos de acordo com o manual. Para conhecimento, foi copiado o modelo 3.5.1 adaptado
+     * Também removi os campos Espécie, REAL, Quantidade e Valor por considerar desnecessários e não obrigatórios
+     *
+     * @var string
+     */
+    protected $layout = 'bradesco.phtml';
 
     /**
      * Trata-se de código utilizado para identificar mensagens especificas ao cedente, sendo
@@ -122,6 +148,14 @@ class Bradesco extends BoletoAbstract
         return $this->cip;
     }
 
+    public function setSequencial( $sequencial )
+    {
+        $modulo11 = $this->modulo11( str_pad( $sequencial, 11, 0, STR_PAD_LEFT ), 7 );
+        $this->digitoAutoConferencia = $modulo11['resto'] != 1 ? $modulo11['digito'] : 'P';
+        $this->sequencial = $sequencial;
+        return $this;
+    }
+
     /**
      * Define nomes de campos específicos do boleto do Bradesco
      *
@@ -132,6 +166,10 @@ class Bradesco extends BoletoAbstract
         return array(
             'cip' => self::zeroFill($this->getCip(), 3),
             'mostra_cip' => true,
+            'nosso_numero' =>
+                str_pad( $this->getCarteira(), 2, 0, STR_PAD_LEFT ) . '/' .
+                str_pad( $this->getNossoNumero(), 11, 0, STR_PAD_LEFT ) . '-' .
+                $this->digitoAutoConferencia
         );
     }
 }
