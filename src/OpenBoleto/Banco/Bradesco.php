@@ -150,7 +150,7 @@ class Bradesco extends BoletoAbstract
 
     public function setSequencial( $sequencial )
     {
-        $modulo11 = $this->modulo11( str_pad( $sequencial, 11, 0, STR_PAD_LEFT ), 7 );
+        $modulo11 = $this->modulo11(str_pad( $this->getCarteira(), 2, 0, STR_PAD_LEFT ) . str_pad( $sequencial, 11, 0, STR_PAD_LEFT ), 7 );
         $this->digitoAutoConferencia = $modulo11['resto'] != 1 ? $modulo11['digito'] : 'P';
         $this->sequencial = $sequencial;
         return $this;
