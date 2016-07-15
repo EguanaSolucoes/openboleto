@@ -93,6 +93,12 @@ class Caixa extends BoletoAbstract
         return $this;
     }
 
+    public function getDvConta()
+    {
+        $modulo = self::modulo11($this->conta);
+        return $modulo['digito'];
+    }
+
     /**
      * Gera o Nosso Número.
      *
@@ -173,5 +179,17 @@ class Caixa extends BoletoAbstract
         $campoLivre .= $modulo['digito'];
 
        return $campoLivre;
+    }
+
+    /**
+     * Define nomes de campos específicos do boleto do Itaú
+     *
+     * @return array
+     */
+    public function getViewVars()
+    {
+        return array(
+            'agencia_codigo_cedente' => $this->getAgenciaCodigoCedente() . '-' . $this->getDvConta(), // Campo não utilizado pelo Itaú
+        );
     }
 }
