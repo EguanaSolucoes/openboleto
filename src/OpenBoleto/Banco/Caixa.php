@@ -190,6 +190,7 @@ class Caixa extends BoletoAbstract
     {
         return array(
             'agencia_codigo_cedente' => $this->getAgenciaCodigoCedente() . '-' . $this->getDvConta(), // Campo não utilizado pelo Itaú
+            'especie' => 'R$',
         );
     }
 }
