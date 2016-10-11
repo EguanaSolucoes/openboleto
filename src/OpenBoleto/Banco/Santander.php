@@ -115,6 +115,8 @@ class Santander extends BoletoAbstract
      */
     protected function gerarNossoNumero()
     {
+        $nossoNumero = $this->getSequencial();
+        $nossoNumero = $nossoNumero . self::modulo11($nossoNumero)['digito'];
         return self::zeroFill($this->getSequencial(), 13);
     }
 
