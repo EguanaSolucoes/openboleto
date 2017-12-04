@@ -249,7 +249,7 @@ class Agente
      */
     public function getCepCidadeUf()
     {
-        $dados = array_filter(array($this->getCep(), $this->getCidade(), $this->getUf()));
+        $dados = array_filter(array($this->getCidade(), $this->getUf(), $this->getCep()));
         return implode(' - ', $dados);
     }
 }

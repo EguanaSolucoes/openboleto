@@ -48,12 +48,13 @@
         <td colspan="6">
             <div class="titulo">Beneficiário</div>
             <div class="conteudo"><?php echo $cedente ?></div>
+            <div class="conteudo"><?php echo $cedente_endereco1 ?> - <?php echo $cedente_endereco2 ?></div>
         </td>
-        <td colspan="1">
+        <td colspan="1" valign="top">
             <div class="titulo">CNPJ do Beneficiário</div>
             <div class="conteudo"><?php echo $cedente_cpf_cnpj ?></div>
         </td>
-        <td>
+        <td valign="top">
             <div class="titulo">Agência/Código beneficiário</div>
             <div class="conteudo rtl"><?php echo $agencia_codigo_cedente ?></div>
         </td>
@@ -172,11 +173,11 @@
     </tr>
     <tr>
         <td colspan="7">
-            <div class="titulo">Sacado</div>
+            <div class="titulo">Pagador</div>
             <div class="conteudo"><?php echo $sacado ?></div>
             <div class="conteudo"><?php echo $sacado_endereco1 ?></div>
             <div class="conteudo"><?php echo $sacado_endereco2 ?></div>
-
+            <div class="conteudo"><?php echo $sacado_documento ?></div>
         </td>
         <td class="noleftborder">
             <div class="titulo" style="margin-top: 50px">Cód. Baixa</div>
